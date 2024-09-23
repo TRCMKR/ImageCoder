@@ -1,0 +1,3 @@
+/Users/trcmkr/Личное/Coding/C++/ImageCoder/cmake-build-debug/CMakeFiles/ImageCoder.dir
+/Users/trcmkr/Личное/Coding/C++/ImageCoder/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/trcmkr/Личное/Coding/C++/ImageCoder/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,4 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/trcmkr/Личное/Coding/C++/ImageCoder -B /Users/trcmkr/Личное/Coding/C++/ImageCoder/cmake-build-release
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/trcmkr/Личное/Coding/C++/ImageCoder/cmake-build-release
