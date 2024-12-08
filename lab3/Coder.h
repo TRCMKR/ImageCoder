@@ -52,22 +52,43 @@ vector<matrix> toCheckVector(const vector<matrix> & vec) {
 
 matrix ISD(const matrix & z, const matrix & G, int t, int iter) {
     matrix res;
+    res.SetDims(0, G.NumRows());
     vector<vector<int>> prevTau;
-    for (int i = 0; i < iter; ++i) {
-        vec_GF2 tau = random_vec_GF2(G.NumCols());
-        while (weight(tau) != 5) tau = random_vec_GF2(G.NumCols());
-        auto tmp = projectMatr(G, toVector(tau));
-        while (std::find(prevTau.begin(), prevTau.end(), toVector(tau)) != prevTau.end()
-               || gauss(tmp) != G.NumRows()) {
-            tau = random_vec_GF2(G.NumCols());
+    for (int ind = 0; ind < z.NumRows(); ++ind) {
+        for (int i = 0; i < iter; ++i) {
+            vec_GF2 tau = random_vec_GF2(G.NumCols());
             while (weight(tau) != 5) tau = random_vec_GF2(G.NumCols());
-            tmp = projectMatr(G, toVector(tau));
-//            cout << determinant(tmp) << endl;
+            auto tmp = projectMatr(G, toVector(tau));
+            while (std::find(prevTau.begin(), prevTau.end(), toVector(tau)) != prevTau.end()
+                   || gauss(tmp) != G.NumRows()) {
+                tau = random_vec_GF2(G.NumCols());
+                while (weight(tau) != 5) tau = random_vec_GF2(G.NumCols());
+                tmp = projectMatr(G, toVector(tau));
+                //            cout << determinant(tmp) << endl;
+                   }
+            auto mH = projectVector(z[ind], toVector(tau)) * inv(projectMatr(G, toVector(tau)));
+            auto cH = mH * G;
+            // cout << z[ind] << endl;
+            // cout << cH << endl;
+            // cout << z[ind] + cH << endl;
+            if (weight(z[ind] + cH) <= t) {
+                long currentRows = res.NumRows();
+                res.SetDims(currentRows + 1, res.NumCols());
+
+                for (long j = 0; j < res.NumCols(); ++j) {
+                    res[currentRows][j] = mH[j];
+                }
+                break;
+            }
+            // [[1 0 1 0 0 0 1 0 1 0 1 0 1]
+            // ]
+            // [[1 1 1 0 0 0 1 1 1 0 1 0 1]
+            // ]
+            // [[0 1 0 0 0 0 0 1 0 0 0 0 0]
+            // ]
+            prevTau.push_back(toVector(tau));
         }
-        auto mH = projectMatr(z, toVector(tau)) * inv(projectMatr(G, toVector(tau)));
-        auto cH = mH * G;
-        if (minDistance(z + cH) <= t) return mH;
-        prevTau.push_back(toVector(tau));
+        prevTau.clear();
     }
 //    cout << "Ошибка декодирования ISD!" << endl;
     return res;

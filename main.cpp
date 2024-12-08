@@ -132,5 +132,31 @@ int main() {
     // cout << m * transpose(m) << endl;
 //    cout << transpose(extH) * extH << endl;
 //    cout << linearSpan(toVect(extH));
+
+    matrix z = {
+        {1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1},
+            {1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+            {0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0}
+    };
+
+    matrix g = {
+        {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0},
+            {1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1},
+            {0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0},
+            {0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1},
+            {1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1}
+    };
+    int t = 2;
+
+    auto res = ISD(z, g, t, 100);
+    for (long i = 0; i < res.NumRows(); ++i) {
+        cout << res[i] << endl;
+    }
+
+    auto c = res * g;
+    for (long i = 0; i < c.NumRows(); ++i) {
+        cout << c[i] << endl;
+    }
     return 0;
 }

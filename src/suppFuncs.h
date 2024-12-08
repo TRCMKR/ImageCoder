@@ -156,6 +156,16 @@ matrix projectMatr(const matrix & mat, const vector<int> & t) {
     return res;
 }
 
+NTL::vec_GF2 projectVector(const NTL::vec_GF2 & v, const vector<int> & t) {
+    NTL::vec_GF2 res;
+    long i = 0;
+    for (const auto & coef: t) {
+        if (coef) res.append(v[i]);
+        ++i;
+    }
+    return res;
+}
+
 matrix concatMatr(const matrix & matr1, const matrix & matr2) {
     NTL::vec_vec_GF2 vec;
     matrix res;
